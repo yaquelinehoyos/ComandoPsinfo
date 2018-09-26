@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+//Se crea la estructura con los datos necesarios de cada proceso
 typedef struct InfoProceso {
     char nombre[100];
     char estado[100];
@@ -17,7 +19,7 @@ typedef struct InfoProceso {
 
 } InfoProceso;
 
-//struct InfoProceso imprimirInfo(FILE *file, int comando);
+//Declaración de métodos
 void imprimirInfo(FILE *file);
 void guardarInfo(FILE *file, FILE *outFile);
 

@@ -4,18 +4,30 @@
 
 #include "func.h"
 
+/*Como el archivo se lee caracter a caracter, éste método se encarga de convertir
+un caracter a string para poder concaternarlo y guardarlo en la estructura
+*/
 void *concatenar(char *nom, char ch){
     char aux[2];
     aux[0] = ch;
     aux[1] = '\0';
     strcat(nom, aux);
+    return 0;
 }
 
+
+/*El siguiente método se encarga de guardar la información solicitada 
+de cada proceso en la estructura creada en el func.c 
+*/
 void imprimirInfo(FILE *file){
-    InfoProceso *pInfo = malloc(sizeof(InfoProceso));
+
+    //Declaración de variables
+    InfoProceso *pInfo = malloc(sizeof(InfoProceso)); //Se pide espacio en memoria para la estructura pInfo
     int counter = 0;
     char ch;
     int flag = 0;
+
+    //Se lee el archivo caracter a caracter
     while((ch = getc(file)) != EOF){
         if(ch == '\n'){
             counter++;  

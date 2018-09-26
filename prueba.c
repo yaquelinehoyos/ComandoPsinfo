@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-//Librería necesaria para el manejo de errores en C
-#include <errno.h>
-int errno;
+#include "prueba.h"
 
 /*Método implementado para el control de los parámetros del comando psinfo.
 * Recibe por parametros el vector de argumentos y la cantidad de elementos que tiene este.
@@ -21,6 +18,11 @@ int buscarInconsistencia(char *parametros[], int arg){
 
     // Se valida que al tener 2 argumentos, solo se tenga el nombre del programa en C y el proceso del que se requiere la información.
     if(arg == 2 && parametros[1][0] == '-'){
+        return -3;
+    }
+
+    //Se valida el tener más de dos argumentos y recibr un comando de la forma -X para decidir la acción a realizar
+    if (arg > 2 && (parametros[1][0] != '-' && parametros[arg-1][0] != '-')){
         return -2;
     }
 
@@ -28,7 +30,7 @@ int buscarInconsistencia(char *parametros[], int arg){
     if(parametros[1][0] == '-' && parametros[arg-1][0] == '-'){
         return -1;
     }
-
+   
 
     for(int i = 1; i < arg; i++){
         /*Condicional que evalua que los comando de la forma -X solo estén en la primera o en la última posición, 
@@ -64,21 +66,8 @@ int buscarInconsistencia(char *parametros[], int arg){
     }
     //Si se encontró un error, se muestra un mensaje con los parámetros que son válidos.
     if(control != 0){
+        printf("Error al ingresar los parametros\n");
         printf("Parametros validos: %s\n", mensaje);
     }    
     return control;
-}
-
-int main(int argc, char *argv[]){
-    int errores = buscarInconsistencia(argv, argc);  
-
-    /*Si al buscar inconsistencias en los parámetros el retorno es diferente de 0, se realiza un manejo de errores
-    * mediante el uso de la librería <errno.h>.
-    */
-    if(errores != 0){
-        errno = 1;
-        fprintf(stderr, "Numero del error: %d\n", errno);
-        perror("Error encontrado");
-    }
-    return 0;
 }
